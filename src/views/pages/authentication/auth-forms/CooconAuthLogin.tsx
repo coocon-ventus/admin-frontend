@@ -45,10 +45,6 @@ const FirebaseLogin = ({ ...others }) => {
     const customization = useSelector((state:any) => state.customization);
     const [checked, setChecked] = useState(true);
 
-    const googleHandler = async () => {
-        console.error('Login');
-    };
-
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -62,60 +58,6 @@ const FirebaseLogin = ({ ...others }) => {
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>
                 <Grid item xs={12}>
-
-                    <AnimateButton >
-                     <Box
-                        sx={{
-                        backgroundColor: '#FEE500'
-                        }}
-                        alignItems="center"
-                    >
-                        <a 
-                         href="http://localhost:8080/oauth2/authorization/kakao">
-                               <img src={Kakao} alt="kakao" style={{ marginRight: matchDownSM ? 8 : 16 }}/>
-                        </a>
-                        </Box>
-                    </AnimateButton>
-
-                    <AnimateButton>
-                        <Button
-                            disableElevation
-                            fullWidth
-                            //onClick={googleHandler}
-                            href="http://localhost:8080/oauth2/authorization/google" 
-                            size="large"
-                            variant="outlined"
-                            sx={{
-                                color: 'grey.700',
-                                backgroundColor: theme.palette.grey[50],
-                                borderColor: theme.palette.grey[100]
-                            }}
-                        >
-                            <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
-                            </Box>
-                            Sign in with Google
-                        </Button>
-                    </AnimateButton>
-                    <AnimateButton>
-                        <Button
-                            disableElevation
-                            fullWidth
-                            //onClick={googleHandler}
-                            href="http://localhost:8080/oauth2/authorization/coocon" 
-                            size="large"
-                            variant="outlined"
-                            sx={{
-                                color: 'grey.700',
-                                backgroundColor: theme.palette.grey[50],
-                                borderColor: theme.palette.grey[100]
-                            }}
-                        >
-                            Sign in with Coocon
-                        </Button>
-                    </AnimateButton>
-                </Grid>
-                <Grid item xs={12}>
                     <Box
                         sx={{
                             alignItems: 'center',
@@ -124,30 +66,8 @@ const FirebaseLogin = ({ ...others }) => {
                     >
                         <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
 
-                        <Button
-                            variant="outlined"
-                            sx={{
-                                cursor: 'unset',
-                                m: 2,
-                                py: 0.5,
-                                px: 7,
-                                borderColor: `${theme.palette.grey[100]} !important`,
-                                color: `${theme.palette.grey[900]}!important`,
-                                fontWeight: 500,
-                                borderRadius: `${customization.borderRadius}px`
-                            }}
-                            disableRipple
-                            disabled
-                        >
-                            OR
-                        </Button>
 
                         <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} container alignItems="center" justifyContent="center">
-                    <Box sx={{ mb: 2 }}>
-                        <Typography variant="subtitle1">Sign in with Email address</Typography>
                     </Box>
                 </Grid>
             </Grid>
@@ -259,10 +179,10 @@ const FirebaseLogin = ({ ...others }) => {
                                         color="primary"
                                     />
                                 }
-                                label="Remember me"
+                                label="로그인 유지"
                             />
                             <Typography variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
-                                Forgot Password?
+                                비밀번호 찾기
                             </Typography>
                         </Stack>
                         {errors.submit && (
@@ -282,7 +202,7 @@ const FirebaseLogin = ({ ...others }) => {
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    Sign in
+                                    로그인
                                 </Button>
                             </AnimateButton>
                         </Box>
