@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import queryString from 'query-string';
 import axios from 'axios';
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -50,6 +51,10 @@ const FirebaseLogin = ({ ...others }) => {
         setShowPassword(!showPassword);
     };
 
+
+    const query = queryString.parse(window.location.search);
+
+
     const handleMouseDownPassword = (event:any) => {
         event.preventDefault();
     };
@@ -84,10 +89,17 @@ const FirebaseLogin = ({ ...others }) => {
                 })}
                 onSubmit={async (values: object, { setErrors, setStatus, setSubmitting }:any) => {
                     try {
+                        
                         console.log('onSbumit1');
-                        const response = await axios.post('http://localhost:8180/oauth2/authorization/coocon')
+                        console.log(JSON.stringify(query));
+                        console.log(query.client_id);
+
+                        const response = await axios.post('http://localhost:8080/oauth/authorize')
                         .then(function(response) {
                             console.log(response.data);
+                        })
+                        .catch(function(err){
+                            console.log('err');
                         });
                         console.log(response);
                         console.log('onSbumit2');
