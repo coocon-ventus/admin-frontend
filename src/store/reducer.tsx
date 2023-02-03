@@ -1,12 +1,21 @@
 import { combineReducers } from 'redux';
-
 // reducer import
 import customizationReducer from './customizationReducer';
+import authReducer from './authReducer';
+
+import { persistReducer } from 'redux-persist';
+import storageSession from 'redux-persist/lib/storage'
 
 // ==============================|| COMBINE REDUCER ||============================== //
-
+const persistConfig = {
+    key : "root",
+    storage:storageSession,
+    whitelist :["authReducer","authState"]
+};
 const reducer = combineReducers({
-    customization: customizationReducer
+    customization: customizationReducer,
+    authState: authReducer
 });
 
-export default reducer;
+export default persistReducer(persistConfig,reducer);
+ 

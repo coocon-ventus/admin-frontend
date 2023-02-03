@@ -22,7 +22,7 @@ function App() {
               <BrowserRouter>
                   <NavigationScroll>
                         <Routes/>
-                  </NavigationScroll>
+                   </NavigationScroll>
               </BrowserRouter>
           </ThemeProvider>
       </StyledEngineProvider>

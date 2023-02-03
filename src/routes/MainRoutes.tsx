@@ -3,7 +3,8 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
-
+import { useSelector } from 'react-redux';
+import {Navigate } from 'react-router-dom'
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('../views/dashboard/Default')));
 
@@ -19,9 +20,10 @@ const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const MainRoutes = {
+const MainRoutes = (isAuth:boolean) => {
+    const mainRoute = {
     path: '/',
-    element: <MainLayout />,
+    element: isAuth ? <MainLayout /> :  <Navigate to={"/pages/login/coocon"} replace />,
     children: [
         {
             path: '/',
@@ -85,7 +87,9 @@ const MainRoutes = {
             path: 'sample-page',
             element: <SamplePage />
         }
-    ]
+    ]};
+
+    return mainRoute;
 };
 
 export default MainRoutes;

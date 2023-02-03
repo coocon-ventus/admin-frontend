@@ -9,6 +9,7 @@ const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/aut
 const AuthRegister3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3')));
 const CooconAuthRegister = Loadable(lazy(() => import('../views/pages/authentication/authentication3/CooconRegister')));
 const CooconAuthLogin = Loadable(lazy(() => import('../views/pages/authentication/authentication3/CooconLogin')));
+const CooconAuthRedirect = Loadable(lazy(() => import('../views/pages/authentication/authentication3/CooconAuthRedirect')));
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
 const AuthenticationRoutes = {
@@ -30,6 +31,10 @@ const AuthenticationRoutes = {
         {
             path: '/pages/register/coocon',
             element: <CooconAuthRegister />
+        },
+        {
+            path: '/auth/redirect',
+            element: <CooconAuthRedirect />
         }
     ]
 };

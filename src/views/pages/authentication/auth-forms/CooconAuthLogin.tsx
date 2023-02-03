@@ -93,7 +93,7 @@ const FirebaseLogin = ({ ...others }) => {
                         console.log('onSbumit1');
                         console.log(JSON.stringify(query));
                         console.log(query.client_id);
-
+                      
                         const response = await axios.post('http://localhost:8080/oauth/authorize')
                         .then(function(response) {
                             console.log(response.data);

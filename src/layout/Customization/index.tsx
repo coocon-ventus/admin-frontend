@@ -91,6 +91,7 @@ const Customization = () => {
     return (
         <>
             {/* toggle button */}
+            {/* TODO toggle 항목 주석처리 2023.02.02
             <Tooltip title="Live Customize">
                 <Fab
                     component="div"
@@ -117,6 +118,7 @@ const Customization = () => {
                     </AnimateButton>
                 </Fab>
             </Tooltip>
+                */}
 
             <Drawer
                 anchor="right"
