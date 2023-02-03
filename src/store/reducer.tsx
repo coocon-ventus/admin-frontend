@@ -18,4 +18,3 @@ const reducer = combineReducers({
 });
 
 export default persistReducer(persistConfig,reducer);
- 

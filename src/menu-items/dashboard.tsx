@@ -18,7 +18,15 @@ const dashboard = {
             url: '/dashboard/default',
             icon: icons.IconDashboard,
             breadcrumbs: false
-        }
+        },
+        {
+            id: 'customDashBoard',
+            title: 'customDashBoard',
+            type: 'item',
+            url: '/dashboard/custom',
+            icon: icons.IconDashboard,
+            breadcrumbs: false
+        },
     ]
 };
 

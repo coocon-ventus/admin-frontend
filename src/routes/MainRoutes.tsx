@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import {Navigate } from 'react-router-dom'
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('../views/dashboard/Default')));
-
+const DashboardCustom = Loadable(lazy(() => import('../views/dashboard/Custom')));
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('../views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('../views/utilities/Color')));
@@ -27,7 +27,7 @@ const MainRoutes = (isAuth:boolean) => {
     children: [
         {
             path: '/',
-            element: <DashboardDefault />
+            element: <DashboardCustom />
         },
         {
             path: 'dashboard',
@@ -35,6 +35,15 @@ const MainRoutes = (isAuth:boolean) => {
                 {
                     path: 'default',
                     element: <DashboardDefault />
+                }
+            ]
+        },
+        {
+            path: 'dashboard',
+            children: [
+                {
+                    path: 'custom',
+                    element: <DashboardCustom />
                 }
             ]
         },

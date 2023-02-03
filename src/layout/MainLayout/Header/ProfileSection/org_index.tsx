@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useSelector ,useDispatch } from 'react-redux';
-import { LOGOUT } from '../../../../store/authActions'
+import { useSelector } from 'react-redux';
+
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -33,6 +33,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 // project imports
 import MainCard from '../../../../ui-component/cards/MainCard';
 import Transitions from '../../../../ui-component/extended/Transitions';
+import UpgradePlanCard from './UpgradePlanCard';
 import User1 from '../../../../assets/images/users/user-round.svg';
 
 // assets
@@ -44,7 +45,7 @@ const ProfileSection = () => {
     const theme = useTheme<any>();
     const customization = useSelector((state:any) => state.customization);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+
     const [sdm, setSdm] = useState(true);
     const [value, setValue] = useState('');
     const [notification, setNotification] = useState(false);
@@ -56,8 +57,6 @@ const ProfileSection = () => {
     const anchorRef = useRef<any>(null);
     const handleLogout = async () => {
         console.log('Logout');
-        dispatch({type: LOGOUT});
-        navigate('/');
     };
 
     const handleClose = (event:any) => {
@@ -158,14 +157,13 @@ const ProfileSection = () => {
                                     <Box sx={{ p: 2 }}>
                                         <Stack>
                                             <Stack direction="row" spacing={0.5} alignItems="center">
-                                                <Typography variant="h4">인사말,</Typography>
+                                                <Typography variant="h4">Good Morning,</Typography>
                                                 <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                                                    유저이름state
+                                                    Johne Doe
                                                 </Typography>
                                             </Stack>
-                                            <Typography variant="subtitle2">유저회사</Typography>
+                                            <Typography variant="subtitle2">Project Admin</Typography>
                                         </Stack>
-                                        {/*}
                                         <OutlinedInput
                                             sx={{ width: '100%', pr: 1, pl: 2, my: 2 }}
                                             id="input-search-profile"
@@ -182,12 +180,11 @@ const ProfileSection = () => {
                                                 'aria-label': 'weight'
                                             }}
                                         />
-                                        */}
                                         <Divider />
                                     </Box>
-                                    <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 550px)', overflowX: 'hidden' }}>
+                                    <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
                                         <Box sx={{ p: 2 }}>
-                                             {/*}<UpgradePlanCard />
+                                            <UpgradePlanCard />
                                             <Divider />
                                             <Card
                                                 sx={{
@@ -231,9 +228,7 @@ const ProfileSection = () => {
                                                     </Grid>
                                                 </CardContent>
                                             </Card>
-                                          
-                                            <Divider /> 
-                                             */}
+                                            <Divider />
                                             <List
                                                 component="nav"
                                                 sx={{
@@ -260,7 +255,6 @@ const ProfileSection = () => {
                                                     </ListItemIcon>
                                                     <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
                                                 </ListItemButton>
-                                                {/*
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 1}
@@ -269,7 +263,6 @@ const ProfileSection = () => {
                                                     <ListItemIcon>
                                                         <IconUser stroke={1.5} size="1.3rem" />
                                                     </ListItemIcon>
-
                                                     <ListItemText
                                                         primary={
                                                             <Grid container spacing={1} justifyContent="space-between">
@@ -289,7 +282,7 @@ const ProfileSection = () => {
                                                             </Grid>
                                                         }
                                                     />
-                                                    </ListItemButton>*/}
+                                                </ListItemButton>
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 4}
