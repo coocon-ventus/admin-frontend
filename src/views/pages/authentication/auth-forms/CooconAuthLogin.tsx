@@ -87,18 +87,37 @@ const FirebaseLogin = ({ ...others }) => {
                     email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                     password: Yup.string().max(255).required('Password is required')
                 })}
-                onSubmit={async (values: object, { setErrors, setStatus, setSubmitting }:any) => {
+                onSubmit={async (values: any, { setErrors, setStatus, setSubmitting }:any) => {
                     try {
                         
                         console.log('onSbumit1');
                         console.log(JSON.stringify(query));
                         console.log(query.client_id);
-                      
-                        const response = await axios.post('http://localhost:8080/oauth/authorize')
+                        console.log(values);
+
+                        console.log(values.email)
+                        console.log(values.password);
+                        const response = await axios({
+                            url : 'http://localhost:8080/login',
+                            method : 'post',
+                            params : {
+                            
+                            },
+                            data : {
+                                email : values.email,
+                                password : values.password
+                            }
+                        })
                         .then(function(response) {
-                            console.log(response.data);
+                            console.log("응답결과"+response.data);
+                            console.log("응답결과"+JSON.stringify(response));
+                            console.log("응답Data"+JSON.stringify(response.data));
+                            console.log("응답Header"+JSON.stringify(response.headers));
+                            console.log("응답config"+JSON.stringify(response.config));
+                            console.log("응답status"+JSON.stringify(response.status));
                         })
                         .catch(function(err){
+                            console.log("에러... ");
                             console.log('err');
                         });
                         console.log(response);
@@ -112,6 +131,7 @@ const FirebaseLogin = ({ ...others }) => {
                         }
                         */
                     } catch (err:any) {
+                        console.log("에러2");
                         console.error(err);
                         /*
                         if (scriptedRef.current) {
