@@ -1,5 +1,5 @@
 // action - state management
-import * as authAction from './authActions';
+import {LOGIN, LOGOUT}  from './actions';
 import axios from 'axios'
 
 export const authState = {
@@ -7,23 +7,32 @@ export const authState = {
     authed: false
 };
 
+//todo
+const getExpireFromToken = (token:string) => {
+
+};
+
+const silentRefresh = () => {
+    console.log('silent refresh');
+};
+
+const tokenExpireTime:number = (`${process.env.REACT_APP_TOKEN_TIMEOUT}` as unknown as number);
+
 // ==============================|| AUTH REDUCER ||============================== //
 
 const authReducer = (state = authState, action:any) => {
     switch (action.type) {
-        case authAction.LOGIN:
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + action.accessToken;
-            console.log('123');
-            setTimeout(()=>{console.log('timeout')},2000);
+        case LOGIN:
+
             return {
                 ...state,
                 //accessToken: action.accessToken,
                 authed: true
             };
-        case authAction.LOGOUT:
+        case LOGOUT:
+            axios.defaults.headers.common['Authorization'] = '';
             return {
                 ...state,
-                accessToken: '',
                 authed: false
             };
         default:

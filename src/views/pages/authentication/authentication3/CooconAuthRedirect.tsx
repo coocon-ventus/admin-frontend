@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { LOGIN } from '../../../../store/authActions'
+import { LOGIN } from '../../../../store/actions'
 
 // ================================|| AUTH - REDIRECT ||================================ //
 
