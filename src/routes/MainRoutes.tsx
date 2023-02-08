@@ -5,6 +5,7 @@ import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
 import { useSelector } from 'react-redux';
 import {Navigate } from 'react-router-dom'
+
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('../views/dashboard/Default')));
 const DashboardCustom = Loadable(lazy(() => import('../views/dashboard/Custom')));
@@ -18,12 +19,18 @@ const UtilsTablerIcons = Loadable(lazy(() => import('../views/utilities/TablerIc
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
 
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = (isAuth:boolean) => {
+    /*
+    if(!isAuth){
+        alert("권한이 없습니다");
+    }
+    */
     const mainRoute = {
     path: '/',
-    element: isAuth ? <MainLayout /> :  <Navigate to={"/pages/login/coocon"} replace />,
+    element: isAuth ? <MainLayout /> :  <Navigate to={"/login"} replace />,
     children: [
         {
             path: '/',
@@ -96,8 +103,8 @@ const MainRoutes = (isAuth:boolean) => {
             path: 'sample-page',
             element: <SamplePage />
         }
-    ]};
-
+    ]}; 
+ 
     return mainRoute;
 };
 

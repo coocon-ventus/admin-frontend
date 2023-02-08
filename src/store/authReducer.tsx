@@ -1,5 +1,5 @@
 // action - state management
-import {LOGIN, LOGOUT}  from './actions';
+import {LOGIN, LOGOUT, LOGINTEST}  from './actions';
 import axios from 'axios'
 
 export const authState = {
@@ -23,11 +23,19 @@ const tokenExpireTime:number = (`${process.env.REACT_APP_TOKEN_TIMEOUT}` as unkn
 const authReducer = (state = authState, action:any) => {
     switch (action.type) {
         case LOGIN:
-
+            console.log("LOGIN dispatch!!");
+            /*
+            if(action.payload){
+                console.log("payload true");
+                state.authed= true;
+            }
+            else {
+                console.log("payload false");
+            }
+            */
             return {
                 ...state,
-                //accessToken: action.accessToken,
-                authed: true
+                authed:true
             };
         case LOGOUT:
             axios.defaults.headers.common['Authorization'] = '';
@@ -35,6 +43,8 @@ const authReducer = (state = authState, action:any) => {
                 ...state,
                 authed: false
             };
+        case LOGINTEST:
+            return action.payload;
         default:
             return state;
     }

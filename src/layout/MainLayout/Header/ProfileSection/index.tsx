@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { useSelector ,useDispatch } from 'react-redux';
-import { LOGOUT } from '../../../../store/authActions'
+import { LOGOUT } from 'store/actions';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -57,7 +57,7 @@ const ProfileSection = () => {
     const handleLogout = async () => {
         console.log('Logout');
         dispatch({type: LOGOUT});
-        navigate('/');
+        navigate('/login');
     };
 
     const handleClose = (event:any) => {

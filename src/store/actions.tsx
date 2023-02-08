@@ -7,3 +7,4 @@ export const SET_BORDER_RADIUS = 'SET_BORDER_RADIUS';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const LOGINTEST = 'LOGINTEST';

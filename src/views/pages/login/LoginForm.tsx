@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import queryString from 'query-string';
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 // material-ui
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import {LOGIN, LOGINTEST} from 'store/actions';
 import {
     Box,
     Button,
@@ -22,30 +24,30 @@ import {
     useMediaQuery
 } from '@mui/material';
 
+import commonAxios from 'utils/commonAxios';
+import axiosAgent from 'utils/axiosAgent';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import useScriptRef from '../../../../hooks/useScriptRef';
-import AnimateButton from '../../../../ui-component/extended/AnimateButton';
+import useScriptRef from '../../../hooks/useScriptRef';
+import AnimateButton from '../../../ui-component/extended/AnimateButton';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+// ============================|| COOCON - LOGIN ||============================ //
 
-import Google from '../../../../assets/images/icons/social-google.svg';
-import Kakao from '../../../../assets/images/icons/kakao_login_medium_wide.png';
-// ============================|| FIREBASE - LOGIN ||============================ //
-
-const FirebaseLogin = ({ ...others }) => {
+const LoginForm = ({ ...others }) => {
 
     const theme:any = useTheme();
     const scriptedRef = useScriptRef();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const customization = useSelector((state:any) => state.customization);
     const [checked, setChecked] = useState(true);
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -88,40 +90,47 @@ const FirebaseLogin = ({ ...others }) => {
                     password: Yup.string().max(255).required('Password is required')
                 })}
                 onSubmit={async (values: any, { setErrors, setStatus, setSubmitting }:any) => {
-                    try {
+                    await commonAxios.post('/login',values)
+                    .then(response => {
+                        let accessToken = response.data;
+                        console.log("정상처리 " + accessToken);
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+                        dispatch({type: LOGIN});
                         
-                        console.log('onSbumit1');
-                        console.log(JSON.stringify(query));
-                        console.log(query.client_id);
-                        console.log(values);
-
-                        console.log(values.email)
-                        console.log(values.password);
+                        alert("로그인 성공");
+                        navigate("/");
+                    })
+                    .catch(error =>{
+                        switch(error.response.data.status){
+                            case HttpStatusCode.Unauthorized:
+                                alert("NonAuthorized");
+                                break;
+                            case HttpStatusCode.InternalServerError:
+                                alert("로그인 실행 중 내부 오류가 발생했습니다.\n"+ "TODO 오류 메시지");
+                                break;
+                            default:
+                                return false;
+                        }
+                    });
+                    
+                    try {
+                        /*
+                        dispatch({type:LOGIN, payload: await axiosAgent.auth.login(values)});
+                        navigate("/");
+                        */
+                        /*
                         const response = await axios({
                             url : 'http://localhost:8080/login',
                             method : 'post',
-                            params : {
-                            
-                            },
-                            data : {
-                                email : values.email,
-                                password : values.password
-                            }
+                            data : values
                         })
                         .then(function(response) {
                             console.log("응답결과"+response.data);
-                            console.log("응답결과"+JSON.stringify(response));
-                            console.log("응답Data"+JSON.stringify(response.data));
-                            console.log("응답Header"+JSON.stringify(response.headers));
-                            console.log("응답config"+JSON.stringify(response.config));
-                            console.log("응답status"+JSON.stringify(response.status));
                         })
                         .catch(function(err){
-                            console.log("에러... ");
-                            console.log('err');
+                            alert('로그인 실패');
                         });
-                        console.log(response);
-                        console.log('onSbumit2');
+                        */
                         /*
                         console.log(JSON.stringify(scriptedRef));
                         if (scriptedRef.current) {
@@ -131,8 +140,6 @@ const FirebaseLogin = ({ ...others }) => {
                         }
                         */
                     } catch (err:any) {
-                        console.log("에러2");
-                        console.error(err);
                         /*
                         if (scriptedRef.current) {
                             setStatus({ success: false });
@@ -245,4 +252,4 @@ const FirebaseLogin = ({ ...others }) => {
     );
 };
 
-export default FirebaseLogin;
+export default LoginForm;

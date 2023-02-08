@@ -5,11 +5,11 @@ import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
-import AuthWrapper1 from '../AuthWrapper1';
-import AuthCardWrapper from '../AuthCardWrapper';
-import AuthLogin from '../auth-forms/CooconAuthLogin';
+import AuthWrapper1 from '../authentication/AuthWrapper1';
+import AuthCardWrapper from '../authentication/AuthCardWrapper';
+import LoginForm from 'views/pages/login/LoginForm';
 //import Logo from '../../../../ui-component/Logo';
-import AuthFooter from '../../../../ui-component/cards/AuthFooter';
+import AuthFooter from 'ui-component/cards/AuthFooter';
 
 // assets
 
@@ -32,7 +32,7 @@ const Login = () => {
                                         </Link>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <AuthLogin />
+                                        <LoginForm />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Divider />
