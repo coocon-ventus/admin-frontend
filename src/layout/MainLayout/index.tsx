@@ -76,6 +76,11 @@ const MainLayout = () => {
     };
 
     useEffect(() => {
+        console.log(`${process.env.REACT_APP_SERVER}`)
+    }, []);
+
+
+    useEffect(() => {
         dispatch({ type: SET_MENU, opened: !matchDownMd });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [matchDownMd]);
