@@ -1,10 +1,11 @@
 // action - state management
-import {LOGIN, LOGOUT, LOGINTEST}  from './actions';
+import {LOGIN, LOGOUT, LOGIN_COUNT_INCREASE}  from './actionNames';
 import axios from 'axios'
 
 export const authState = {
     //accessToken :'',
-    authed: false
+    authed: false,
+    loginCount : 0
 };
 
 //todo
@@ -24,15 +25,6 @@ const authReducer = (state = authState, action:any) => {
     switch (action.type) {
         case LOGIN:
             console.log("LOGIN dispatch!!");
-            /*
-            if(action.payload){
-                console.log("payload true");
-                state.authed= true;
-            }
-            else {
-                console.log("payload false");
-            }
-            */
             return {
                 ...state,
                 authed:true
@@ -43,8 +35,12 @@ const authReducer = (state = authState, action:any) => {
                 ...state,
                 authed: false
             };
-        case LOGINTEST:
-            return action.payload;
+        case LOGIN_COUNT_INCREASE:
+            return {
+                ...state,
+                loginCount: state.loginCount +1
+            };
+
         default:
             return state;
     }

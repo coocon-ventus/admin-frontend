@@ -1,9 +1,14 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import queryString from 'query-string';
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 // material-ui
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import {LOGIN} from 'store/actionNames';
+import commonAxios from 'utils/commonAxios';
+import {Login} from 'store/authActions';
+
 import {
     Box,
     Button,
@@ -27,33 +32,25 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import useScriptRef from '../../../../hooks/useScriptRef';
-import AnimateButton from '../../../../ui-component/extended/AnimateButton';
+import useScriptRef from 'hooks/useScriptRef';
+import AnimateButton from 'ui-component/extended/AnimateButton';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import Google from '../../../../assets/images/icons/social-google.svg';
-import Kakao from '../../../../assets/images/icons/kakao_login_medium_wide.png';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const FirebaseLogin = ({ ...others }) => {
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const theme:any = useTheme();
-    const scriptedRef = useScriptRef();
-    const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-    const customization = useSelector((state:any) => state.customization);
     const [checked, setChecked] = useState(true);
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
-
-    const query = queryString.parse(window.location.search);
-
 
     const handleMouseDownPassword = (event:any) => {
         event.preventDefault();
@@ -84,71 +81,18 @@ const FirebaseLogin = ({ ...others }) => {
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+                    email: Yup.string().email('올바르지 않은 이메일 형식입니다.').max(255).required('Email is required'),
                     password: Yup.string().max(255).required('Password is required')
                 })}
-                onSubmit={async (values: any, { setErrors, setStatus, setSubmitting }:any) => {
-                    try {
-                        
-                        console.log('onSbumit1');
-                        console.log(JSON.stringify(query));
-                        console.log(query.client_id);
-                        console.log(values);
-
-                        console.log(values.email)
-                        console.log(values.password);
-                        const response = await axios({
-                            url : 'http://localhost:8080/login',
-                            method : 'post',
-                            params : {
-                            
-                            },
-                            data : {
-                                email : values.email,
-                                password : values.password
-                            }
-                        })
-                        .then(function(response) {
-                            console.log("응답결과"+response.data);
-                            console.log("응답결과"+JSON.stringify(response));
-                            console.log("응답Data"+JSON.stringify(response.data));
-                            console.log("응답Header"+JSON.stringify(response.headers));
-                            console.log("응답config"+JSON.stringify(response.config));
-                            console.log("응답status"+JSON.stringify(response.status));
-                        })
-                        .catch(function(err){
-                            console.log("에러... ");
-                            console.log('err');
-                        });
-                        console.log(response);
-                        console.log('onSbumit2');
-                        /*
-                        console.log(JSON.stringify(scriptedRef));
-                        if (scriptedRef.current) {
-                            console.log('onSbumit');
-                            setStatus({ success: true });
-                            setSubmitting(false);
-                        }
-                        */
-                    } catch (err:any) {
-                        console.log("에러2");
-                        console.error(err);
-                        /*
-                        if (scriptedRef.current) {
-                            setStatus({ success: false });
-                            setErrors({ submit: err.message });
-                            setSubmitting(false);
-                        }
-                        */
-                    }
+                onSubmit={async (values: any, { setSubmitting }:any) => {
+                    setSubmitting(false);
+                    Login(values,dispatch,navigate);
                 }}
-          
-                Formik
-            >
+            Formik>
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }:any) => (
                     <form noValidate onSubmit={handleSubmit} {...others}>
                         <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-                            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-email-login">Email</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-email-login"
                                 type="email"
@@ -201,6 +145,7 @@ const FirebaseLogin = ({ ...others }) => {
                                 </FormHelperText>
                             )}
                         </FormControl>
+                        {/*
                         <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                             <FormControlLabel
                                 control={
@@ -217,6 +162,7 @@ const FirebaseLogin = ({ ...others }) => {
                                 비밀번호 찾기
                             </Typography>
                         </Stack>
+                        */}
                         {errors.submit && (
                             <Box sx={{ mt: 3 }}>
                                 <FormHelperText error>{errors.submit}</FormHelperText>

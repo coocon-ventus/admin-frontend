@@ -11,15 +11,22 @@ import themes from './themes';
 // project imports
 import NavigationScroll from './layout/NavigationScroll';
 import {BrowserRouter} from "react-router-dom";
+import AxiosNavigation from 'utils/AxiosNavigation';
+import { useEffect} from 'react'
 
 function App() {
     // @ts-ignore
     const customization = useSelector((state) => state.customization);
+    useEffect(() => {
+      console.log('maybe is execute when refresh');
+    }, []);
+    
   return (
       <StyledEngineProvider injectFirst>
           <ThemeProvider theme={themes(customization)}>
               <CssBaseline />
               <BrowserRouter>
+                <AxiosNavigation/>
                   <NavigationScroll>
                         <Routes/>
                    </NavigationScroll>

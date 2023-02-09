@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import { useSelector ,useDispatch } from 'react-redux';
-import { LOGOUT } from 'store/actions';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -34,7 +32,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import MainCard from '../../../../ui-component/cards/MainCard';
 import Transitions from '../../../../ui-component/extended/Transitions';
 import User1 from '../../../../assets/images/users/user-round.svg';
-
+import {Logout} from 'store/authActions'; 
+import commonAxios from 'utils/commonAxios';
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
 
@@ -50,14 +49,25 @@ const ProfileSection = () => {
     const [notification, setNotification] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [open, setOpen] = useState(false);
+   
+    const userObject = {
+        id:'',
+        name:'',
+        company:'',
+        auth:''
+    };
+    const [user, setUser] = useState(userObject);
+
+    const authState = useSelector((state:any) => state.authState);
+    
+    const loginCount = useState(authState.loginCount);
+ 
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
      * */
     const anchorRef = useRef<any>(null);
     const handleLogout = async () => {
-        console.log('Logout');
-        dispatch({type: LOGOUT});
-        navigate('/login');
+        Logout(dispatch,navigate);
     };
 
     const handleClose = (event:any) => {
@@ -80,6 +90,7 @@ const ProfileSection = () => {
     };
 
     const prevOpen = useRef(open);
+
     useEffect(() => {
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
@@ -87,6 +98,18 @@ const ProfileSection = () => {
 
         prevOpen.current = open;
     }, [open]);
+
+
+    useEffect(() => {
+        console.log('get member');
+        (async () => {
+            await commonAxios.get("/member/me").then((response:any) => {
+                console.log(JSON.stringify(response.data));
+                setUser(response.data);
+            });
+        })();
+    }, []);
+
 
     return (
         <>
@@ -158,9 +181,9 @@ const ProfileSection = () => {
                                     <Box sx={{ p: 2 }}>
                                         <Stack>
                                             <Stack direction="row" spacing={0.5} alignItems="center">
-                                                <Typography variant="h4">인사말,</Typography>
+                                                <Typography variant="h4">환영합니다,</Typography>
                                                 <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                                                    유저이름state
+                                                    {user.id}({user.name})
                                                 </Typography>
                                             </Stack>
                                             <Typography variant="subtitle2">유저회사</Typography>
