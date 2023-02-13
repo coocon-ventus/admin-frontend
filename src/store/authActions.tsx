@@ -5,7 +5,13 @@ import commonAxios from 'utils/commonAxios';
 export const Login = async (data:any,dispatch:any, navigate:any)  => {
     try{
         await commonAxios.post('/login',data).then((response:any)=>{
-            setToken(response.data);
+
+            const { accessToken } = response.data;
+            if(accessToken == null || accessToken == undefined){
+                alert("로그인 실행 중 내부 오류가 발생했습니다.\n" + "TODO 오류 메시지");
+                return false;
+            }
+            setToken(accessToken);
             dispatch( {
                 type: LOGIN,
                 payload: response.data
@@ -18,14 +24,20 @@ export const Login = async (data:any,dispatch:any, navigate:any)  => {
         })
         .catch(error =>{
             console.log(JSON.stringify(error.code));
-            switch(error.response.data.status){
+            console.log(JSON.stringify(error));
+            console.log(JSON.stringify(error.response));
+            switch(error.response.status){
                 case HttpStatusCode.Unauthorized:
                     alert("NonAuthorized");
                     break;
                 case HttpStatusCode.InternalServerError:
-                    alert("로그인 실행 중 내부 오류가 발생했습니다.\n"+ "TODO 오류 메시지");
+                    alert("로그인 실행 중 내부 오류가 발생했습니다.");
+                    break;
+                case HttpStatusCode.BadRequest:
+                    alert("로그인 실패 \n"+ error.response.data.error_message);
                     break;
                 default:
+                    alert("로그인 실패.");
                     return false;
             }
         });
@@ -69,8 +81,7 @@ export const Logout = (dispatch:any, navigate:any) => {
     navigate("/");
 }
 
-const setToken = (data:any) => {
-    const { accessToken } = data;
+const setToken = (accessToken:any) => {
     //console.log('access token = [',accessToken,']');
     commonAxios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
     //console.log('after access token = [',axios.defaults.headers.common['Authorization'],']');
