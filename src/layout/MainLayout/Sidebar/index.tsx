@@ -13,12 +13,48 @@ import MenuList from './MenuList';
 import LogoSection from '../LogoSection';
 import MenuCard from './MenuCard';
 import { drawerWidth } from '../../../store/constant';
-
+import commonAxios from 'utils/commonAxios';
+import {useEffect, useState} from 'react';
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
 const Sidebar = ({ drawerOpen, drawerToggle, window }:any) => {
     const theme = useTheme();
     const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
+    const [menus, setMenus] = useState([]);
+
+    useEffect(() => {
+
+
+        (async () => {
+            await commonAxios.get("/member/menu/list").then((response:any) => {
+                console.log("sidebar init = [" + JSON.stringify(response.data) + "]");
+                let data = response.data;
+
+                const idMapping = data.reduce((acc:any, el:any, i:number) => {
+                    acc[el.id] = i;
+                    return acc;
+                  }, {});
+
+                let root:any = [];
+                data.forEach((element:any,index:number) => {
+                    // Handle the root element
+                    console.log(element);
+                    if (element.parentMenu === null) {
+                        root.push(element);
+                      return;
+                    }
+                    // Use our mapping to locate the parent element in our data array
+                    const parentEl = data[idMapping[element.parentMenu]];
+                    // Add our current el to its parent's `children` array
+                    parentEl.children = [...(parentEl.children || []), element];
+                  });
+                
+                console.log("root [" +JSON.stringify(root));
+                setMenus(root);
+                console.log("menus [" + JSON.stringify(menus));
+            });
+        })();
+    }, []);
 
     const drawer = (
         <>
@@ -36,13 +72,14 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }:any) => {
                         paddingRight: '16px'
                     }}
                 >
+                    <MenuList menu={menus} />
                     <MenuList />
                     <MenuCard />
                 </PerfectScrollbar>
             </BrowserView>
             <MobileView>
                 <Box sx={{ px: 2 }}>
-                    <MenuList />
+                    {/*<MenuList />*/}
                     <MenuCard />
                 </Box>
             </MobileView>

@@ -51,7 +51,7 @@ const utilities = {
                     title: 'Tabler Icons',
                     type: 'item',
                     url: '/icons/tabler-icons',
-                    breadcrumbs: false
+                    breadcrumbs: true
                 },
                 {
                     id: 'material-icons',
