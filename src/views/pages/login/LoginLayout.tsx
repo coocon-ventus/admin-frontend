@@ -10,7 +10,7 @@ import AuthCardWrapper from '../authentication/AuthCardWrapper';
 import LoginForm from 'views/pages/login/LoginForm';
 //import Logo from '../../../../ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
-
+import cooconLogo from 'assets/images/coocon_logo.png';
 // assets
 
 // ================================|| AUTH3 - LOGIN ||================================ //
@@ -26,10 +26,8 @@ const Login = () => {
                         <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
                             <AuthCardWrapper>
                                 <Grid container spacing={2} alignItems="center" justifyContent="center">
-                                    <Grid item sx={{ mb: 3 }}>
-                                        <Link to="#">
-                                            쿠콘로고
-                                        </Link>
+                                    <Grid item sx={{ mb: 2,mt:2 }}>
+                                        <img src={cooconLogo} alt='coocon_logo'/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <LoginForm />
@@ -37,6 +35,7 @@ const Login = () => {
                                     <Grid item xs={12}>
                                         <Divider />
                                     </Grid>
+                                    {/*
                                     <Grid item xs={12}>
                                         <Grid item container direction="column" alignItems="center" xs={12}>
                                             <Typography
@@ -45,10 +44,11 @@ const Login = () => {
                                                 variant="subtitle1"
                                                 sx={{ textDecoration: 'none' }}
                                             >
-                                                회원가입
+                                                접속 안내
                                             </Typography>
                                         </Grid>
                                     </Grid>
+                                    */}
                                 </Grid>
                             </AuthCardWrapper>
                         </Grid>

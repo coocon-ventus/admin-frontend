@@ -145,24 +145,6 @@ const FirebaseLogin = ({ ...others }) => {
                                 </FormHelperText>
                             )}
                         </FormControl>
-                        {/*
-                        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={checked}
-                                        onChange={(event) => setChecked(event.target.checked)}
-                                        name="checked"
-                                        color="primary"
-                                    />
-                                }
-                                label="로그인 유지"
-                            />
-                            <Typography variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
-                                비밀번호 찾기
-                            </Typography>
-                        </Stack>
-                        */}
                         {errors.submit && (
                             <Box sx={{ mt: 3 }}>
                                 <FormHelperText error>{errors.submit}</FormHelperText>
@@ -170,7 +152,7 @@ const FirebaseLogin = ({ ...others }) => {
                         )}
 
                         <Box sx={{ mt: 2 }}>
-                            <AnimateButton>
+                            {/*<AnimateButton>*/}
                                 <Button
                                     disableElevation
                                     disabled={isSubmitting}
@@ -178,11 +160,11 @@ const FirebaseLogin = ({ ...others }) => {
                                     size="large"
                                     type="submit"
                                     variant="contained"
-                                    color="secondary"
+                                    color="primary"
                                 >
                                     로그인
                                 </Button>
-                            </AnimateButton>
+                            {/*</AnimateButton>*/}
                         </Box>
                     </form>
                 )}

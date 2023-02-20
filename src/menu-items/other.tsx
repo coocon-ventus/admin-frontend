@@ -1,8 +1,5 @@
 // assets
-import { IconBrandChrome, IconHelp } from '@tabler/icons';
-
-// constant
-const icons = { IconBrandChrome, IconHelp };
+import tablerIconUtil  from 'utils/tablerIconUtil';
 
 // ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
 
@@ -15,7 +12,7 @@ const other = {
             title: 'Sample Page',
             type: 'item',
             url: '/sample-page',
-            icon: icons.IconBrandChrome,
+            icon: tablerIconUtil('IconBrandChrome'),
             breadcrumbs: false
         },
         {
@@ -23,7 +20,7 @@ const other = {
             title: 'Documentation',
             type: 'item',
             url: 'https://codedthemes.gitbook.io/berry/',
-            icon: icons.IconHelp,
+            icon: tablerIconUtil('IconHelp'),
             external: true,
             target: true
         }

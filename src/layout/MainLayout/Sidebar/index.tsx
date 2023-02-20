@@ -15,19 +15,19 @@ import MenuCard from './MenuCard';
 import { drawerWidth } from '../../../store/constant';
 import commonAxios from 'utils/commonAxios';
 import {useEffect, useState} from 'react';
+import tablerIconUtil from 'utils/tablerIconUtil';
+import * as icons from '@tabler/icons';
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
 const Sidebar = ({ drawerOpen, drawerToggle, window }:any) => {
     const theme = useTheme();
     const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
     const [menus, setMenus] = useState([]);
-
     useEffect(() => {
 
 
         (async () => {
             await commonAxios.get("/member/menu/list").then((response:any) => {
-                console.log("sidebar init = [" + JSON.stringify(response.data) + "]");
                 let data = response.data;
 
                 const idMapping = data.reduce((acc:any, el:any, i:number) => {
@@ -37,8 +37,10 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }:any) => {
 
                 let root:any = [];
                 data.forEach((element:any,index:number) => {
-                    // Handle the root element
-                    console.log(element);
+                    if(element.icon != null && element.icon !== undefined){
+                       element.icon = tablerIconUtil( element.icon);
+                    }
+
                     if (element.parentMenu === null) {
                         root.push(element);
                       return;
@@ -49,7 +51,6 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }:any) => {
                     parentEl.children = [...(parentEl.children || []), element];
                   });
                 
-                console.log("root [" +JSON.stringify(root));
                 setMenus(root);
                 console.log("menus [" + JSON.stringify(menus));
             });
