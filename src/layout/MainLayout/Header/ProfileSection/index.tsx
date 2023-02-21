@@ -133,9 +133,10 @@ const ProfileSection = () => {
                         lineHeight: 0
                     }
                 }}
+                
                 icon={
                     <Avatar
-                        src={User1}
+                        /*src={User1}*/
                         sx={{
                             ...theme.typography.mediumAvatar,
                             margin: '8px 0 8px 8px !important',
@@ -145,7 +146,7 @@ const ProfileSection = () => {
                         aria-controls={open ? 'menu-list-grow' : undefined}
                         aria-haspopup="true"
                         color="inherit"
-                    />
+                    >{user.name.charAt(0)}</Avatar>
                 }
                 label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
                 variant="outlined"
@@ -186,7 +187,7 @@ const ProfileSection = () => {
                                                     {user.id}({user.name})
                                                 </Typography>
                                             </Stack>
-                                            <Typography variant="subtitle2">유저회사</Typography>
+                                            <Typography variant="subtitle2">{user.company}</Typography>
                                         </Stack>
                                         {/*}
                                         <OutlinedInput
@@ -210,7 +211,7 @@ const ProfileSection = () => {
                                     </Box>
                                     <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 550px)', overflowX: 'hidden' }}>
                                         <Box sx={{ p: 2 }}>
-                                             {/*}<UpgradePlanCard />
+                                             {/*
                                             <Divider />
                                             <Card
                                                 sx={{

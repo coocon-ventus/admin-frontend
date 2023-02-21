@@ -79,7 +79,7 @@ export const Logout = (dispatch:any, navigate:any) => {
     dispatch( {type: LOGOUT});
     delete commonAxios.defaults.headers.common["Authorization"];
     navigate("/");
-}
+};
 
 const setToken = (accessToken:any) => {
     //console.log('access token = [',accessToken,']');
