@@ -8,7 +8,9 @@ const NavigationScroll = ({ children }:any) => {
     const location = useLocation();
     const { pathname } = location;
 
+    alert("로케이션 변경");
     useEffect(() => {
+    
         window.scrollTo({
             top: 0,
             left: 0,

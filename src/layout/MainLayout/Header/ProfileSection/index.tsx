@@ -59,6 +59,7 @@ const ProfileSection = () => {
     const [user, setUser] = useState(userObject);
 
     const authState = useSelector((state:any) => state.authState);
+    commonAxios.defaults.headers.common['Authorization'] = 'Bearer ' + authState.accessToken;
     
     const loginCount = useState(authState.loginCount);
  

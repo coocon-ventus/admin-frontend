@@ -1,25 +1,26 @@
 import {LOGIN,LOGOUT} from 'store/actionNames';
 import axios , { HttpStatusCode } from 'axios';
 import commonAxios from 'utils/commonAxios';
+import { useSelector } from 'react-redux';
 
 export const Login = async (data:any,dispatch:any, navigate:any)  => {
     try{
         await commonAxios.post('/login',data).then((response:any)=>{
-
+            console.log("에러나는시점");
             const { accessToken } = response.data;
             if(accessToken == null || accessToken == undefined){
                 alert("로그인 실행 중 내부 오류가 발생했습니다.\n" + "TODO 오류 메시지");
                 return false;
             }
             setToken(accessToken);
-            dispatch( {
+            dispatch({
                 type: LOGIN,
-                payload: response.data
+                accessToken: response.data.accessToken
             });
 
             alert('로그인 성공');
             navigate("/");
-            setTimeout(()=>console.log('it\'s refresh time'),2000);
+            setTimeout(()=>RefreshToken(data,dispatch,navigate),2000);
             return true;
         })
         .catch(error =>{

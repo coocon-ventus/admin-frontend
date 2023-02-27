@@ -8,12 +8,16 @@ import AuthenticationRoutes from './AuthenticationRoutes';
 // ==============================|| ROUTING RENDER ||============================== //
 
 export default function ThemeRoutes() {
-    const authState = useSelector((state:any) => state.authState);
-    
+    const authState = useSelector((state:any) => state.authState);    
     const authed:boolean = authState.authed;
+
+    const testState = useSelector((state)=>state);
+
+    console.log(testState);
 
     useEffect(()=>{
         console.log("authed = ["+authed +"]");
     },[]);
+
     return useRoutes([MainRoutes(authed), AuthenticationRoutes]);
 }

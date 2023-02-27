@@ -28,6 +28,7 @@ const MainRoutes = (isAuth:boolean) => {
         alert("권한이 없습니다");
     }
     */
+    console.log("여기 계속 한번 실행?");
     const mainRoute = {
     path: '/',
     element: isAuth ? <MainLayout /> :  <Navigate to={"/login"} replace />,

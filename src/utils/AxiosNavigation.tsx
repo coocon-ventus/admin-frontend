@@ -20,7 +20,10 @@ export function useAxiosNavigation() {
             case 401:
                 alert("인증 오류! 재 로그인 필요");
                 navRef.current('/login');  
-            break;
+                break;
+            case 404:
+                alert("??");
+                break;
             default:
         }
         return Promise.reject(error);

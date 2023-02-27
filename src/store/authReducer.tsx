@@ -1,9 +1,9 @@
 // action - state management
-import {LOGIN, LOGOUT, LOGIN_COUNT_INCREASE}  from './actionNames';
+import {LOGIN, LOGOUT, LOGIN_COUNT_INCREASE, LOGIN_EXTEND}  from './actionNames';
 import axios from 'axios'
 
 export const authState = {
-    //accessToken :'',
+    accessToken :'',
     authed: false,
     loginCount : 0
 };
@@ -27,6 +27,8 @@ const authReducer = (state = authState, action:any) => {
             console.log("LOGIN dispatch!!");
             return {
                 ...state,
+                accessToken : action.accessToken,
+                refreshToken : '',
                 authed:true
             };
         case LOGOUT:
@@ -40,7 +42,11 @@ const authReducer = (state = authState, action:any) => {
                 ...state,
                 loginCount: state.loginCount +1
             };
-
+        case LOGIN_EXTEND:
+            return{
+                ...state,
+                accessToken : action.accessToken
+            };
         default:
             return state;
     }

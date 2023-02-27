@@ -16,8 +16,9 @@ import { useEffect} from 'react'
 
 function App() {
     // @ts-ignore
-    const customization = useSelector((state) => state.customization);
+    const {authState,customization} = useSelector((state) => state);
     useEffect(() => {
+      console.log(authState);
       console.log('maybe is execute when refresh');
     }, []);
     
